@@ -14,9 +14,7 @@ public class HeatStrokeEffect extends MobEffect {
 
   @Override
   public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-    pLivingEntity.hurt(
-        HEAT_STROKE,
-        1 + pAmplifier);
+    pLivingEntity.hurt(HEAT_STROKE, 1 + pAmplifier);
     super.applyEffectTick(pLivingEntity, pAmplifier);
   }
 

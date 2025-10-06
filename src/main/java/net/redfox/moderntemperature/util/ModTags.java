@@ -1,7 +1,6 @@
 package net.redfox.moderntemperature.util;
 
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -21,7 +20,8 @@ public class ModTags {
 
     private static TagKey<Biome> tag(String name) {
       return TagKey.create(
-          Registry.BIOME_REGISTRY, ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, name));
+          Registry.BIOME_REGISTRY,
+          ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, name));
     }
   }
 }

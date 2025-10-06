@@ -14,9 +14,7 @@ public class HypothermiaEffect extends MobEffect {
 
   @Override
   public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-    pLivingEntity.hurt(
-        HYPOTHERMIA,
-        1 + pAmplifier);
+    pLivingEntity.hurt(HYPOTHERMIA, 1 + pAmplifier);
     super.applyEffectTick(pLivingEntity, pAmplifier);
   }
 
