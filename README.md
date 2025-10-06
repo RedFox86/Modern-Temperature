@@ -14,4 +14,5 @@ FAQ:
 - A: Come report it on the issue tracker [here](https://github.com/RedFox86/Modern-Temperature/issues)!
 
 This project is created under the [MIT License](https://opensource.org/license/mit)
+
 You are free to use this mod in your modpack :P
