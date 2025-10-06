@@ -1,0 +1,7 @@
+{
+	"effect.moderntemperature.hypothermia": "Hypothermia",
+	"effect.moderntemperature.heat_stroke": "Heat Stroke",
+
+	"death.attack.hypothermia": "%s succumbed to hypothermia",
+	"death.attack.heat_stroke": "%s succumbed to heat stroke"
+}
