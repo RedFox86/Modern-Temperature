@@ -2,10 +2,8 @@ package net.redfox.moderntemperature.networking.packet;
 
 import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.redfox.moderntemperature.client.ClientTemperatureData;
 import net.redfox.moderntemperature.networking.ModPackets;
 import net.redfox.moderntemperature.temperature.PlayerTemperature;
 import net.redfox.moderntemperature.temperature.PlayerTemperatureProvider;
@@ -30,15 +28,6 @@ public class TemperatureC2SPacket {
                     playerTemperature -> {
                       float approachingTemperature =
                           PlayerTemperature.calculateTemperatureGoal(player);
-
-                      player.sendSystemMessage(
-                          Component.literal(
-                              "Actual: "
-                                  + playerTemperature.getTemperature()
-                                  + ", goal: "
-                                  + approachingTemperature
-                                  + ", client: "
-                                  + ClientTemperatureData.getPlayerTemperature()));
 
                       playerTemperature.approachTemperature(approachingTemperature);
 
