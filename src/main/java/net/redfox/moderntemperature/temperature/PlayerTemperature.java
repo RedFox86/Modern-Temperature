@@ -96,13 +96,13 @@ public class PlayerTemperature {
   public static float calculateTemperatureGoal(ServerPlayer player) {
     float goalTemperature = 0;
     // Biome
-    String currentBiome = getItemNameFromKey(player.level().getBiome(player.blockPosition()));
+    String currentBiome = getItemNameFromKey(player.level.getBiome(player.blockPosition()));
 
     if (BIOME_VALUES.containsKey(currentBiome)) goalTemperature = BIOME_VALUES.get(currentBiome);
     // Insulators (torches, campfires, lava, fire, magma)
     for (String insulator : INSULATOR_VALUES.keySet()) {
       if (player
-              .level()
+              .level
               .getBlockStates(player.getBoundingBox().inflate(5))
               .filter(
                   blockState -> {
@@ -117,7 +117,7 @@ public class PlayerTemperature {
     }
     // Fluids
     String blockName =
-        getItemNameFromKey(player.level().getBlockState(player.blockPosition()).getBlockHolder());
+        getItemNameFromKey(player.level.getBlockState(player.blockPosition()).getBlockHolder());
     if (FLUID_TEMPERATURE_VALUES.containsKey(blockName))
       goalTemperature += FLUID_TEMPERATURE_VALUES.get(blockName);
 
@@ -126,7 +126,7 @@ public class PlayerTemperature {
     if (player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
       String blockBelowName =
           getItemNameFromKey(
-              player.level().getBlockState(player.blockPosition().below()).getBlockHolder());
+              player.level.getBlockState(player.blockPosition().below()).getBlockHolder());
       if (WALKING_ON_TOP_VALUES.containsKey(blockBelowName))
         goalTemperature += WALKING_ON_TOP_VALUES.get(blockBelowName);
       if (WALKING_ON_TOP_MINI_BLOCKS_VALUES.containsKey(blockName))
@@ -135,22 +135,22 @@ public class PlayerTemperature {
 
     // Rain / snow / thunder
 
-    if (player.level().isRainingAt(player.blockPosition())) {
+    if (player.level.isRainingAt(player.blockPosition())) {
       goalTemperature -= 30;
     }
-    if (player.level().isRaining()
+    if (player.level.isRaining()
         && player
-            .level()
+            .level
             .getBiome(player.blockPosition())
             .value()
             .coldEnoughToSnow(player.blockPosition())
-        && player.level().canSeeSky(player.blockPosition())) {
+        && player.level.canSeeSky(player.blockPosition())) {
       goalTemperature -= 60;
     }
 
     // Day or night
 
-    if (player.level().isDay()) {
+    if (player.level.isDay()) {
       goalTemperature += 10;
     } else {
       goalTemperature -= 10;

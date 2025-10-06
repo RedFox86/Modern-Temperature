@@ -1,5 +1,7 @@
 package net.redfox.moderntemperature.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.redfox.moderntemperature.ModernTemperature;
@@ -52,7 +54,7 @@ public class TemperatureHudOverlay {
           ModernTemperature.MOD_ID, "textures/gui/temperature_gauge/14.png");
 
   public static final IGuiOverlay HUD_TEMPERATURE =
-      ((gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
+      ((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
         final int OVERLAY_WIDTH = (int) (1920.0f / 120.0f);
         final int OVERLAY_HEIGHT = (int) (1080.0f / 67.5f);
 
@@ -73,8 +75,9 @@ public class TemperatureHudOverlay {
           }
         }
 
-        guiGraphics.blit(
-            getTemperatureImage(),
+        RenderSystem.setShaderTexture(0, getTemperatureImage());
+        GuiComponent.blit(
+            poseStack,
             OVERLAY_X,
             OVERLAY_Y,
             0,
