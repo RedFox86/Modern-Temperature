@@ -11,7 +11,7 @@ FAQ:
 - A: No! Although, out of all my mods, this one is the one I'm most likely to port.
 
 - Q: I have a question / issue / bug report!
-- A: Come report it on the issue tracker (here)[https://github.com/RedFox86/Modern-Temperature/issues]!
+- A: Come report it on the issue tracker [here](https://github.com/RedFox86/Modern-Temperature/issues)!
 
-This project is created under the (MIT License)[https://opensource.org/license/mit]
+This project is created under the [MIT License](https://opensource.org/license/mit)
 You are free to use this mod in your modpack :P
