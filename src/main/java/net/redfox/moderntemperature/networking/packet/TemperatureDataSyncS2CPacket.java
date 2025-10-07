@@ -22,7 +22,11 @@ public class TemperatureDataSyncS2CPacket {
 
   public boolean handle(Supplier<NetworkEvent.Context> supplier) {
     NetworkEvent.Context context = supplier.get();
-    context.enqueueWork(() -> ClientTemperatureData.set(temperature));
+    context.enqueueWork(
+        () -> {
+          ClientTemperatureData.set(temperature);
+          System.out.println(5);
+        });
     return true;
   }
 }
