@@ -27,10 +27,6 @@ public class ModEvents {
   @SubscribeEvent
   public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
     if (event.phase == TickEvent.Phase.END) {
-      if (event.getServer().getTickCount() % 100 == 0) {
-        return;
-      }
-
       if (event.getServer().getTickCount() % 20 == 0) {
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
           player
