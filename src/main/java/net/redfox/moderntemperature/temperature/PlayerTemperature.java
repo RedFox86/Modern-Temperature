@@ -10,7 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.redfox.moderntemperature.config.ModernTemperatureCommonConfigs;
-import net.redfox.moderntemperature.util.MathHelper;
+import net.redfox.moderntemperature.math.MathHelper;
 import oshi.util.tuples.Pair;
 
 @AutoRegisterCapability
