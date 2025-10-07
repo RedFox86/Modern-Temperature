@@ -59,10 +59,10 @@ public class ModEvents {
                               false,
                               true));
                     }
-                      playerTemperature.approachTemperature(approachingTemperature);
-                      ModPackets.sendToClient(
-                          new TemperatureDataSyncS2CPacket(playerTemperature.getTemperature()),
-                          player);
+                    playerTemperature.approachTemperature(approachingTemperature);
+                    ModPackets.sendToClient(
+                        new TemperatureDataSyncS2CPacket(playerTemperature.getTemperature()),
+                        player);
                   });
         }
       }
