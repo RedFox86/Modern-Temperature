@@ -2,6 +2,7 @@ package net.redfox.moderntemperature.event;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -15,10 +16,10 @@ import net.minecraftforge.server.command.ConfigCommand;
 import net.redfox.moderntemperature.ModernTemperature;
 import net.redfox.moderntemperature.command.GetTemperature;
 import net.redfox.moderntemperature.command.SetTemperature;
+import net.redfox.moderntemperature.effect.ModEffects;
 import net.redfox.moderntemperature.networking.ModPackets;
-import net.redfox.moderntemperature.networking.packet.SymptomC2SPacket;
-import net.redfox.moderntemperature.networking.packet.TemperatureC2SPacket;
 import net.redfox.moderntemperature.networking.packet.TemperatureDataSyncS2CPacket;
+import net.redfox.moderntemperature.temperature.PlayerTemperature;
 import net.redfox.moderntemperature.temperature.PlayerTemperatureProvider;
 
 @Mod.EventBusSubscriber(modid = ModernTemperature.MOD_ID)
@@ -27,12 +28,43 @@ public class ModEvents {
   public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
     if (event.phase == TickEvent.Phase.END) {
       if (event.getServer().getTickCount() % 100 == 0) {
-        ModPackets.sendToServer(new SymptomC2SPacket());
         return;
       }
 
       if (event.getServer().getTickCount() % 20 == 0) {
-        ModPackets.sendToServer(new TemperatureC2SPacket());
+        for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
+          player
+              .getCapability(PlayerTemperatureProvider.PlAYER_TEMPERATURE)
+              .ifPresent(
+                  playerTemperature -> {
+                    float approachingTemperature =
+                        PlayerTemperature.calculateTemperatureGoal(player);
+                    float temp = playerTemperature.getTemperature();
+                    if (temp >= 80) {
+                      player.addEffect(
+                          new MobEffectInstance(
+                              ModEffects.HEAT_STROKE.get(),
+                              120,
+                              Math.abs((int) ((50 - temp) / 30)) - 1,
+                              false,
+                              false,
+                              true));
+                    } else if (temp <= -80) {
+                      player.addEffect(
+                          new MobEffectInstance(
+                              ModEffects.HYPOTHERMIA.get(),
+                              120,
+                              Math.abs((int) ((temp + 50) / 30)) - 1,
+                              false,
+                              false,
+                              true));
+                      playerTemperature.approachTemperature(approachingTemperature);
+                      ModPackets.sendToClient(
+                          new TemperatureDataSyncS2CPacket(playerTemperature.getTemperature()),
+                          player);
+                    }
+                  });
+        }
       }
     }
   }

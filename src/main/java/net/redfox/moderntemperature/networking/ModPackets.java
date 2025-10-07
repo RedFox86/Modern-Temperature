@@ -9,7 +9,6 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.redfox.moderntemperature.ModernTemperature;
 import net.redfox.moderntemperature.networking.packet.SetTemperatureC2SPacket;
 import net.redfox.moderntemperature.networking.packet.SymptomC2SPacket;
-import net.redfox.moderntemperature.networking.packet.TemperatureC2SPacket;
 import net.redfox.moderntemperature.networking.packet.TemperatureDataSyncS2CPacket;
 
 public class ModPackets {
@@ -31,12 +30,6 @@ public class ModPackets {
             .simpleChannel();
 
     INSTANCE = net;
-
-    net.messageBuilder(TemperatureC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-        .decoder(TemperatureC2SPacket::new)
-        .encoder(TemperatureC2SPacket::toBytes)
-        .consumerMainThread(TemperatureC2SPacket::handle)
-        .add();
 
     net.messageBuilder(SymptomC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
         .decoder(SymptomC2SPacket::new)
