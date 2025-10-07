@@ -27,7 +27,12 @@ public class ModEffects {
 
   public static final RegistryObject<MobEffect> HEAT_STROKE =
       MOB_EFFECTS.register(
-          "heat_stroke", () -> new HeatStrokeEffect(MobEffectCategory.HARMFUL, 0xfa7223));
+          "heat_stroke", () -> new HeatStrokeEffect(MobEffectCategory.HARMFUL, 0xfa7223)
+              .addAttributeModifier(
+                  Attributes.ATTACK_DAMAGE,
+                  "7107DE5E-7CE8-4030-940E-514C1F160889",
+                  -0.15F,
+                  AttributeModifier.Operation.MULTIPLY_TOTAL));
 
   public static void register(IEventBus bus) {
     MOB_EFFECTS.register(bus);
