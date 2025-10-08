@@ -174,7 +174,10 @@ public class ModernTemperatureCommonConfigs {
                 "A Map of all the armor pieces that give some temperature value while wearing them")
             .define("armor", DEFAULT_ARMOR);
 
-    TEMPERATURE_FLUCTUATION = BUILDER.comment("If true, the temperature will fluctuate around its goal by a margin of one.").define("temperatureFluctuation", true);
+    TEMPERATURE_FLUCTUATION =
+        BUILDER
+            .comment("If true, the temperature will fluctuate around its goal by a margin of one.")
+            .define("temperatureFluctuation", true);
 
     BUILDER.pop();
     SPEC = BUILDER.build();
