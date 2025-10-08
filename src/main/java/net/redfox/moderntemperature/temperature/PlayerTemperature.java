@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.redfox.moderntemperature.config.ModernTemperatureCommonConfigs;
@@ -15,6 +17,8 @@ import oshi.util.tuples.Pair;
 
 @AutoRegisterCapability
 public class PlayerTemperature {
+  public static boolean hasTemperatureFluctuation = true;
+
   private static final HashMap<String, Integer> BIOME_VALUES = new HashMap<>();
   private static final HashMap<String, Integer> INSULATOR_VALUES = new HashMap<>();
   private static final HashMap<String, Integer> FLUID_TEMPERATURE_VALUES = new HashMap<>();
@@ -31,7 +35,7 @@ public class PlayerTemperature {
   public void setTemperature(float temperature) {
     this.temperature = MathHelper.roundToOneDecimal(temperature);
   }
-  
+
   public void approachTemperature(float goal) {
     float difference =
         MathHelper.roundToOneDecimal(
@@ -89,64 +93,63 @@ public class PlayerTemperature {
     return holder.unwrapKey().map(key -> key.location().toString()).orElse("default");
   }
 
+  private static String getCurrentPlayerBiomeName(Level level, ServerPlayer player) {
+    return getItemNameFromKey(level.getBiome(player.blockPosition()));
+  }
+
+  private static int returnMapValueIfKeyExists(HashMap<String, Integer> map, String key) {
+    if (map.containsKey(key)) return map.get(key);
+    return 0;
+  }
+
+  private static String getBlockNameRelativeToPlayer(
+      Level level, ServerPlayer player, Vec3i offset) {
+    return getItemNameFromKey(
+        level.getBlockState(player.blockPosition().offset(offset)).getBlockHolder());
+  }
+
   public static float calculateTemperatureGoal(ServerPlayer player) {
+    Level level = player.level();
     float goalTemperature = 0;
     // Biome
-    String currentBiome = getItemNameFromKey(player.level().getBiome(player.blockPosition()));
+    goalTemperature +=
+        returnMapValueIfKeyExists(BIOME_VALUES, getCurrentPlayerBiomeName(level, player));
 
-    if (BIOME_VALUES.containsKey(currentBiome)) goalTemperature = BIOME_VALUES.get(currentBiome);
     // Insulators (torches, campfires, lava, fire, magma)
     for (String insulator : INSULATOR_VALUES.keySet()) {
-      if (player
-              .level()
+      if (level
               .getBlockStates(player.getBoundingBox().inflate(5))
               .filter(
-                  blockState -> {
-                    String blockName = getItemNameFromKey(blockState.getBlockHolder());
-                    return blockName.equals(insulator);
-                  })
+                  blockState -> getItemNameFromKey(blockState.getBlockHolder()).equals(insulator))
               .toArray()
               .length
-          > 0)
-        if (INSULATOR_VALUES.containsKey(insulator))
-          goalTemperature += INSULATOR_VALUES.get(insulator);
+          > 0) goalTemperature += returnMapValueIfKeyExists(INSULATOR_VALUES, insulator);
     }
-    // Fluids
-    String blockName =
-        getItemNameFromKey(player.level().getBlockState(player.blockPosition()).getBlockHolder());
-    if (FLUID_TEMPERATURE_VALUES.containsKey(blockName))
-      goalTemperature += FLUID_TEMPERATURE_VALUES.get(blockName);
-
-    // Ice, packed ice, blue ice
-
     if (player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
-      String blockBelowName =
-          getItemNameFromKey(
-              player.level().getBlockState(player.blockPosition().below()).getBlockHolder());
-      if (WALKING_ON_TOP_VALUES.containsKey(blockBelowName))
-        goalTemperature += WALKING_ON_TOP_VALUES.get(blockBelowName);
-      if (WALKING_ON_TOP_MINI_BLOCKS_VALUES.containsKey(blockName))
-        goalTemperature += WALKING_ON_TOP_MINI_BLOCKS_VALUES.get(blockName);
+      // Fluids
+      goalTemperature +=
+          returnMapValueIfKeyExists(
+              FLUID_TEMPERATURE_VALUES, getBlockNameRelativeToPlayer(level, player, Vec3i.ZERO));
+
+      // Ice, packed ice, blue ice
+      goalTemperature +=
+          returnMapValueIfKeyExists(
+              FLUID_TEMPERATURE_VALUES,
+              getBlockNameRelativeToPlayer(level, player, new Vec3i(0, -1, 0)));
     }
-
     // Rain / snow / thunder
-
-    if (player.level().isRainingAt(player.blockPosition())) {
+    if (level.isRainingAt(player.blockPosition())) {
       goalTemperature -= 30;
     }
-    if (player.level().isRaining()
-        && player
-            .level()
-            .getBiome(player.blockPosition())
-            .value()
-            .coldEnoughToSnow(player.blockPosition())
-        && player.level().canSeeSky(player.blockPosition())) {
+    if (level.isRaining()
+        && level.getBiome(player.blockPosition()).value().coldEnoughToSnow(player.blockPosition())
+        && level.canSeeSky(player.blockPosition())) {
       goalTemperature -= 60;
     }
 
     // Day or night
 
-    if (player.level().isDay()) {
+    if (level.isDay() && level.dimension() == Level.OVERWORLD) {
       goalTemperature += 10;
     } else {
       goalTemperature -= 10;
@@ -179,7 +182,8 @@ public class PlayerTemperature {
       if (goalTemperature < 0) goalTemperature = 0;
     }
 
-    return goalTemperature + ((hasTemperatureFluctuation) ? MathHelper.roundToOneDecimal(Math.random() - 0.5F) : 0);
+    return goalTemperature
+        + ((hasTemperatureFluctuation) ? MathHelper.roundToOneDecimal(Math.random() - 0.5F) : 0);
   }
 
   public static Pair<Integer, Integer> calculateHeatAndColdResistance(ServerPlayer player) {
