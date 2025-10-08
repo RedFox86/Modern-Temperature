@@ -36,7 +36,7 @@ public class ModernTemperature {
 
   private void commonSetup(final FMLCommonSetupEvent event) {
     ModPackets.register();
-
+    if (!ModernTemperatureCommonConfigs.TEMPERATURE_FLUCTUATION.get()) PlayerTemperature.hasTemperatureFluctuation = false;
     PlayerTemperature.populateConfigLists();
   }
 }

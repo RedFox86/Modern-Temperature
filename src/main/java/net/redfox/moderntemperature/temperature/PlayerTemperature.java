@@ -179,7 +179,7 @@ public class PlayerTemperature {
       if (goalTemperature < 0) goalTemperature = 0;
     }
 
-    return goalTemperature + MathHelper.roundToOneDecimal(Math.random() - 0.5F);
+    return goalTemperature + ((hasTemperatureFluctuation) ? MathHelper.roundToOneDecimal(Math.random() - 0.5F) : 0);
   }
 
   public static Pair<Integer, Integer> calculateHeatAndColdResistance(ServerPlayer player) {
