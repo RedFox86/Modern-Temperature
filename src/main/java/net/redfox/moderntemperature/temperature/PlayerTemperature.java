@@ -31,11 +31,7 @@ public class PlayerTemperature {
   public void setTemperature(float temperature) {
     this.temperature = MathHelper.roundToOneDecimal(temperature);
   }
-
-  public void copyFrom(PlayerTemperature other) {
-    this.temperature = MathHelper.roundToOneDecimal(other.temperature);
-  }
-
+  
   public void approachTemperature(float goal) {
     float difference =
         MathHelper.roundToOneDecimal(
