@@ -1,6 +1,6 @@
 package net.redfox.moderntemperature.client;
 
-import net.redfox.moderntemperature.math.MathHelper;
+import net.redfox.moderntemperature.util.MathHelper;
 
 public class ClientTemperatureData {
   private static float playerTemperature;

@@ -1,4 +1,4 @@
-package net.redfox.moderntemperature.math;
+package net.redfox.moderntemperature.util;
 
 public class MathHelper {
   public static float roundToOneDecimal(float number) {
