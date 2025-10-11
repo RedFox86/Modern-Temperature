@@ -65,7 +65,7 @@ public class TemperatureHudOverlay {
     switch (displayMode) {
       case "GAUGE" -> readingEnabled = false;
       case "NUMBER" -> gaugeEnabled = false;
-      default -> {
+      case "NONE" -> {
         gaugeEnabled = false;
         readingEnabled = false;
       }
