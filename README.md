@@ -5,7 +5,7 @@ Config:
 
 FAQ:
 - Q: How do I know my temperature value in game?
-- A: You can see a little orb above your hotbar that will change colors depending on your temperature. If it's shaking, you're likely to start taking damage. Additionally, you can run /temperature get to see your exact value.
+- A: Depending on how you've customized the client configs, there will either be a numerical reading in the top left, a gauage about your hotbar that changes colors based on your temperature, or you can run the /temperature get command to get the exact value.
 
 - Q: Fabric port?
 - A: No! Although, out of all my mods, this one is the one I'm most likely to port.
