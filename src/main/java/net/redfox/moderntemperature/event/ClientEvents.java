@@ -24,7 +24,6 @@ public class ClientEvents {
           VanillaGuiOverlay.DEBUG_TEXT.id(),
           "temperature_reading",
           TemperatureHudOverlay.TEMPERATURE_READING);
-
     }
   }
 }

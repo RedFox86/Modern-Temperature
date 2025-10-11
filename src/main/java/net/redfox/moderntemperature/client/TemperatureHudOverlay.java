@@ -115,7 +115,13 @@ public class TemperatureHudOverlay {
         int OVERLAY_X = 2;
         int OVERLAY_Y = 2;
 
-        GuiComponent.drawString(poseStack, Minecraft.getInstance().font, Component.literal("Temp: " + ClientTemperatureData.getPlayerTemperature()), OVERLAY_X, OVERLAY_Y, ChatFormatting.WHITE.getColor());
+        GuiComponent.drawString(
+            poseStack,
+            Minecraft.getInstance().font,
+            Component.literal("Temp: " + ClientTemperatureData.getPlayerTemperature()),
+            OVERLAY_X,
+            OVERLAY_Y,
+            ChatFormatting.WHITE.getColor());
       });
 
   private static ResourceLocation getTemperatureImage() {

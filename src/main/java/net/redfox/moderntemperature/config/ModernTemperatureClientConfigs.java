@@ -14,7 +14,9 @@ public class ModernTemperatureClientConfigs {
 
     DISPLAY_MODE =
         BUILDER
-            .comment("The method in which the mod displays your temperature.", "Acceptable values: GAUGE, NUMBER, NONE, BOTH")
+            .comment(
+                "The method in which the mod displays your temperature.",
+                "Acceptable values: GAUGE, NUMBER, NONE, BOTH")
             .defineInList("displayMode", "GAUGE", List.of("GAUGE", "NUMBER", "NONE", "BOTH"));
 
     BUILDER.pop();
