@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.redfox.moderntemperature.client.TemperatureHudOverlay;
 import net.redfox.moderntemperature.config.ModernTemperatureClientConfigs;
 import net.redfox.moderntemperature.config.ModernTemperatureCommonConfigs;
 import net.redfox.moderntemperature.effect.ModEffects;
@@ -43,5 +44,7 @@ public class ModernTemperature {
     ModPackets.register();
 
     PlayerTemperature.populateConfigLists();
+
+    TemperatureHudOverlay.initialize();
   }
 }
