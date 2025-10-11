@@ -141,6 +141,8 @@ public class ModernTemperatureCommonConfigs {
   public static final ForgeConfigSpec.ConfigValue<List<String>> WALKING_ON_TOP_MINI_BLOCKS_BOOTS;
   public static final ForgeConfigSpec.ConfigValue<List<String>> ARMOR;
 
+  public static final ForgeConfigSpec.ConfigValue<Boolean> TEMPERATURE_FLUCTUATION;
+
   static {
     BUILDER.push("Common Configs for Modern Temperature");
 
@@ -172,6 +174,10 @@ public class ModernTemperatureCommonConfigs {
             .comment(
                 "A Map of all the armor pieces that give some cold or heat resistance while wearing them")
             .define("armor", DEFAULT_ARMOR);
+    TEMPERATURE_FLUCTUATION =
+        BUILDER
+            .comment("If true, the temperature will fluctuate around its goal by a margin of one.")
+            .define("temperatureFluctuation", true);
 
     BUILDER.pop();
     SPEC = BUILDER.build();
