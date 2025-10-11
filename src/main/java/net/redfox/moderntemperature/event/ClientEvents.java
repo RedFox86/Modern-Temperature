@@ -23,7 +23,7 @@ public class ClientEvents {
       event.registerAbove(
           VanillaGuiOverlay.DEBUG_TEXT.id(),
           "temperature_reading",
-          TemperatureHudOverlay.TEMPERATURE_GAUGE);
+          TemperatureHudOverlay.TEMPERATURE_READING);
     }
   }
 }
