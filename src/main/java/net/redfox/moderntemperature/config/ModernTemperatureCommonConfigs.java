@@ -1,11 +1,12 @@
 package net.redfox.moderntemperature.config;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ModernTemperatureCommonConfigs {
   private static final List<String> DEFAULT_BIOME_TEMPERATURES =
-      List.of(
+      new ArrayList<>(List.of(
           "default,0",
           "minecraft:ocean,-20",
           "minecraft:deep_ocean,-30",
@@ -70,10 +71,10 @@ public class ModernTemperatureCommonConfigs {
           "minecraft:small_end_islands,-400",
           "minecraft:end_midlands,-400",
           "minecraft:end_highlands,-400",
-          "minecraft:end_barrens,-400");
+          "minecraft:end_barrens,-400"));
 
   private static final List<String> DEFAULT_INSULATORS =
-      List.of(
+      new ArrayList<>(List.of(
           "default,0",
           "minecraft:torch,15",
           "minecraft:fire,20",
@@ -85,25 +86,25 @@ public class ModernTemperatureCommonConfigs {
           "minecraft:candle,5",
           "minecraft:soul_campfire,-30",
           "minecraft:soul_torch,-15",
-          "minecraft:soul_lantern,-25");
+          "minecraft:soul_lantern,-25"));
 
   private static final List<String> DEFAULT_FLUID_TEMPERATURES =
-      List.of(
-          "default,0", "minecraft:water,-30", "minecraft:powdered_snow,-100", "minecraft:lava,100");
+      new ArrayList<>(List.of(
+          "default,0", "minecraft:water,-30", "minecraft:powdered_snow,-100", "minecraft:lava,100"));
 
   private static final List<String> DEFAULT_WALKING_ON_TOP_BOOTS =
-      List.of(
+      new ArrayList<>(List.of(
           "default,0",
           "minecraft:blue_ice,-60",
           "minecraft:packed_ice,-40",
           "minecraft:ice,-20",
-          "minecraft:snow_block,-15");
+          "minecraft:snow_block,-15"));
 
   private static final List<String> DEFAULT_WALKING_ON_TOP_MINI_BLOCKS_BOOTS =
-      List.of("default,0", "minecraft:snow,15,-15");
+      new ArrayList<>(List.of("default,0", "minecraft:snow,15,-15"));
 
   private static final List<String> DEFAULT_ARMOR =
-      List.of(
+      new ArrayList<>(List.of(
           "default,0,0",
           "minecraft:leather_boots,2,10",
           "minecraft:leather_leggings,6,30",
@@ -128,7 +129,7 @@ public class ModernTemperatureCommonConfigs {
           "minecraft:netherite_boots,40,-40",
           "minecraft:netherite_leggings,60,-60",
           "minecraft:netherite_chestplate,70,-70",
-          "minecraft:netherite_helmet,50,-50");
+          "minecraft:netherite_helmet,50,-50"));
 
   public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
   public static final ForgeConfigSpec SPEC;
@@ -169,7 +170,7 @@ public class ModernTemperatureCommonConfigs {
     ARMOR =
         BUILDER
             .comment(
-                "A Map of all the armor pieces that give some temperature value while wearing them")
+                "A Map of all the armor pieces that give some cold or heat resistance while wearing them")
             .define("armor", DEFAULT_ARMOR);
 
     BUILDER.pop();
