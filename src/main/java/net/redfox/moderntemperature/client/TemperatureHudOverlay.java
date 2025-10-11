@@ -1,10 +1,16 @@
 package net.redfox.moderntemperature.client;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.redfox.moderntemperature.ModernTemperature;
 
 public class TemperatureHudOverlay {
+  public static boolean gaugeEnabled = true;
+  public static boolean readingEnabled = true;
+
   private static final ResourceLocation TEMPERATURE_0 =
       ResourceLocation.fromNamespaceAndPath(
           ModernTemperature.MOD_ID, "textures/gui/temperature_gauge/0.png");
@@ -51,8 +57,10 @@ public class TemperatureHudOverlay {
       ResourceLocation.fromNamespaceAndPath(
           ModernTemperature.MOD_ID, "textures/gui/temperature_gauge/14.png");
 
-  public static final IGuiOverlay HUD_TEMPERATURE =
+  public static final IGuiOverlay TEMPERATURE_GAUGE =
       ((gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
+        if (!gaugeEnabled) return;
+
         final int OVERLAY_WIDTH = (int) (1920.0f / 120.0f);
         final int OVERLAY_HEIGHT = (int) (1080.0f / 67.5f);
 
@@ -83,6 +91,21 @@ public class TemperatureHudOverlay {
             OVERLAY_HEIGHT,
             OVERLAY_WIDTH,
             OVERLAY_HEIGHT);
+      });
+
+  public static final IGuiOverlay TEMPERATURE_READING =
+      ((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+        if (!gaugeEnabled) return;
+
+        int OVERLAY_X = 2;
+        int OVERLAY_Y = 2;
+
+        poseStack.drawString(
+            Minecraft.getInstance().font,
+            Component.literal("Temp: " + ClientTemperatureData.getPlayerTemperature()),
+            OVERLAY_X,
+            OVERLAY_Y,
+            ChatFormatting.WHITE.getColor());
       });
 
   private static ResourceLocation getTemperatureImage() {
