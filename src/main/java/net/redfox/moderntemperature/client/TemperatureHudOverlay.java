@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.redfox.moderntemperature.ModernTemperature;
+import net.redfox.moderntemperature.config.ModernTemperatureClientConfigs;
 
 public class TemperatureHudOverlay {
   public static boolean gaugeEnabled = true;
@@ -56,6 +57,18 @@ public class TemperatureHudOverlay {
   private static final ResourceLocation TEMPERATURE_14 =
       ResourceLocation.fromNamespaceAndPath(
           ModernTemperature.MOD_ID, "textures/gui/temperature_gauge/14.png");
+
+  public static void initialize() {
+    final String displayMode = ModernTemperatureClientConfigs.DISPLAY_MODE.get();
+    switch (displayMode) {
+      case "GAUGE" -> readingEnabled = false;
+      case "NUMBER" -> gaugeEnabled = false;
+      default -> {
+        gaugeEnabled = false;
+        readingEnabled = false;
+      }
+    }
+  }
 
   public static final IGuiOverlay TEMPERATURE_GAUGE =
       ((gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
