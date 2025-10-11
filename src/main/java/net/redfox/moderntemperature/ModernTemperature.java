@@ -26,6 +26,10 @@ public class ModernTemperature {
         ModConfig.Type.COMMON,
         ModernTemperatureCommonConfigs.SPEC,
         "moderntemperature-common.toml");
+    context.registerConfig(
+        ModConfig.Type.CLIENT,
+        ModernTemperatureCommonConfigs.SPEC,
+        "moderntemperature-client.toml");
 
     ModEffects.register(modEventBus);
 
