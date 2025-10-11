@@ -29,7 +29,7 @@ public class SetTemperatureC2SPacket {
 
           if (player != null)
             player
-                .getCapability(PlayerTemperatureProvider.PlAYER_TEMPERATURE)
+                .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
                 .ifPresent(
                     playerTemperature -> {
                       playerTemperature.setTemperature(temperature);

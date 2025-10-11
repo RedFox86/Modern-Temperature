@@ -32,7 +32,7 @@ public class ModEvents {
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
           System.out.println(2);
           player
-              .getCapability(PlayerTemperatureProvider.PlAYER_TEMPERATURE)
+              .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
               .ifPresent(
                   playerTemperature -> {
                     System.out.println(3);
@@ -74,7 +74,7 @@ public class ModEvents {
     if (event.getObject() instanceof Player) {
       if (!event
           .getObject()
-          .getCapability(PlayerTemperatureProvider.PlAYER_TEMPERATURE)
+          .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
           .isPresent()) {
         event.addCapability(
             ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, "properties"),
@@ -88,7 +88,7 @@ public class ModEvents {
     if (event.isWasDeath()) {
       event
           .getEntity()
-          .getCapability(PlayerTemperatureProvider.PlAYER_TEMPERATURE)
+          .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
           .ifPresent(
               playerTemperature -> {
                 playerTemperature.setTemperature(60);
@@ -101,7 +101,7 @@ public class ModEvents {
     if (!event.getLevel().isClientSide()) {
       if (event.getEntity() instanceof ServerPlayer player) {
         player
-            .getCapability(PlayerTemperatureProvider.PlAYER_TEMPERATURE)
+            .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
             .ifPresent(
                 playerTemperature -> {
                   ModPackets.sendToClient(

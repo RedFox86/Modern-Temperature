@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlayerTemperatureProvider
     implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-  public static Capability<PlayerTemperature> PlAYER_TEMPERATURE =
+  public static Capability<PlayerTemperature> PLAYER_TEMPERATURE =
       CapabilityManager.get(new CapabilityToken<>() {});
   private PlayerTemperature temperature = null;
   private final LazyOptional<PlayerTemperature> optional =
@@ -27,7 +27,7 @@ public class PlayerTemperatureProvider
   @Override
   public @NotNull <T> LazyOptional<T> getCapability(
       @NotNull Capability<T> cap, @Nullable Direction side) {
-    if (cap == PlAYER_TEMPERATURE) {
+    if (cap == PLAYER_TEMPERATURE) {
       return optional.cast();
     }
 
