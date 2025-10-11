@@ -8,6 +8,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.redfox.moderntemperature.client.TemperatureHudOverlay;
+import net.redfox.moderntemperature.config.ModernTemperatureClientConfigs;
 import net.redfox.moderntemperature.config.ModernTemperatureCommonConfigs;
 import net.redfox.moderntemperature.effect.ModEffects;
 import net.redfox.moderntemperature.networking.ModPackets;
@@ -29,7 +30,7 @@ public class ModernTemperature {
         "moderntemperature-common.toml");
     context.registerConfig(
         ModConfig.Type.CLIENT,
-        ModernTemperatureCommonConfigs.SPEC,
+        ModernTemperatureClientConfigs.SPEC,
         "moderntemperature-client.toml");
 
     ModEffects.register(modEventBus);
