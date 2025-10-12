@@ -13,7 +13,7 @@ public class HeatStrokeEffect extends MobEffect {
   }
 
   @Override
-  public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+  public boolean applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
     pLivingEntity.hurt(
         new DamageSource(
             pLivingEntity
@@ -22,11 +22,11 @@ public class HeatStrokeEffect extends MobEffect {
                 .lookupOrThrow(Registries.DAMAGE_TYPE)
                 .getOrThrow(ModDamageTypes.HEAT_STROKE_KEY)),
         1 + pAmplifier);
-    super.applyEffectTick(pLivingEntity, pAmplifier);
+    return super.applyEffectTick(pLivingEntity, pAmplifier);
   }
 
   @Override
-  public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+  public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
     return pDuration % Math.max(10, 50 - 10 * pAmplifier) == 0;
   }
 }

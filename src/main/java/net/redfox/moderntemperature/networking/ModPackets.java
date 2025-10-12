@@ -1,11 +1,10 @@
 package net.redfox.moderntemperature.networking;
 
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.*;
 import net.redfox.moderntemperature.ModernTemperature;
 import net.redfox.moderntemperature.networking.packet.SetTemperatureC2SPacket;
 import net.redfox.moderntemperature.networking.packet.TemperatureDataSyncS2CPacket;
@@ -21,11 +20,11 @@ public class ModPackets {
 
   public static void register() {
     SimpleChannel net =
-        NetworkRegistry.ChannelBuilder.named(
+        ChannelBuilder.named(
                 ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, "message"))
-            .networkProtocolVersion(() -> "1.0")
-            .clientAcceptedVersions(s -> true)
-            .serverAcceptedVersions(s -> true)
+            .networkProtocolVersion(1)
+            .clientAcceptedVersions(Channel.VersionTest.exact(1))
+            .serverAcceptedVersions(Channel.VersionTest.exact(1))
             .simpleChannel();
 
     INSTANCE = net;
@@ -43,10 +42,10 @@ public class ModPackets {
   }
 
   public static <MSG> void sendToServer(MSG message) {
-    INSTANCE.sendToServer(message);
+    INSTANCE.send(message, PacketDistributor.SERVER.noArg());
   }
 
   public static <MSG> void sendToClient(MSG message, ServerPlayer player) {
-    INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
+    INSTANCE.send(message, PacketDistributor.PLAYER.with(player));
   }
 }

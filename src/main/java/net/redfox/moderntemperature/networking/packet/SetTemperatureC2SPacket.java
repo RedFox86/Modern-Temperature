@@ -1,9 +1,8 @@
 package net.redfox.moderntemperature.networking.packet;
 
-import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.redfox.moderntemperature.temperature.PlayerTemperatureProvider;
 
 public class SetTemperatureC2SPacket {
@@ -21,8 +20,7 @@ public class SetTemperatureC2SPacket {
     buf.writeFloat(temperature);
   }
 
-  public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-    NetworkEvent.Context context = supplier.get();
+  public boolean handle(CustomPayloadEvent.Context context) {
     context.enqueueWork(
         () -> {
           ServerPlayer player = context.getSender();

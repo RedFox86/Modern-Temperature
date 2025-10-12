@@ -1,8 +1,8 @@
 package net.redfox.moderntemperature.networking.packet;
 
-import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkContext;
 import net.redfox.moderntemperature.client.ClientTemperatureData;
 
 public class TemperatureDataSyncS2CPacket {
@@ -20,13 +20,10 @@ public class TemperatureDataSyncS2CPacket {
     buf.writeFloat(temperature);
   }
 
-  public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-    NetworkEvent.Context context = supplier.get();
-    context.enqueueWork(
-        () -> {
-          ClientTemperatureData.set(temperature);
-          System.out.println(5);
-        });
+  public boolean handle(CustomPayloadEvent.Context context) {
+    context.enqueueWork(() -> {
+      ClientTemperatureData.set(temperature);
+    });
     return true;
   }
 }

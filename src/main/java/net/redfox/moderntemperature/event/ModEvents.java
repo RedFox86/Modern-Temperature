@@ -28,21 +28,18 @@ public class ModEvents {
   public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
     if (event.phase == TickEvent.Phase.END) {
       if (event.getServer().getTickCount() % 20 == 0) {
-        System.out.println(1);
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
-          System.out.println(2);
           player
               .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
               .ifPresent(
                   playerTemperature -> {
-                    System.out.println(3);
                     float approachingTemperature =
                         PlayerTemperature.calculateTemperatureGoal(player);
                     float temp = playerTemperature.getTemperature();
                     if (temp >= 80) {
                       player.addEffect(
                           new MobEffectInstance(
-                              ModEffects.HEAT_STROKE.get(),
+                              ModEffects.HEAT_STROKE.getHolder().get(),
                               120,
                               Math.abs((int) ((50 - temp) / 30)) - 1,
                               false,
@@ -51,7 +48,7 @@ public class ModEvents {
                     } else if (temp <= -80) {
                       player.addEffect(
                           new MobEffectInstance(
-                              ModEffects.HYPOTHERMIA.get(),
+                              ModEffects.HYPOTHERMIA.getHolder().get(),
                               120,
                               Math.abs((int) ((temp + 50) / 30)) - 1,
                               false,
@@ -59,7 +56,6 @@ public class ModEvents {
                               true));
                     }
                     playerTemperature.approachTemperature(approachingTemperature);
-                    System.out.println(4);
                     ModPackets.sendToClient(
                         new TemperatureDataSyncS2CPacket(playerTemperature.getTemperature()),
                         player);

@@ -1,5 +1,6 @@
 package net.redfox.moderntemperature.effect;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -21,9 +22,9 @@ public class ModEffects {
               new HypothermiaEffect(MobEffectCategory.HARMFUL, 0x7ae9ff)
                   .addAttributeModifier(
                       Attributes.MOVEMENT_SPEED,
-                      "7107DE5E-7CE8-4030-940E-514C1F160891",
+                      ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, "effect.hypothermia"),
                       -0.15F,
-                      AttributeModifier.Operation.MULTIPLY_TOTAL));
+                      AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
   public static final RegistryObject<MobEffect> HEAT_STROKE =
       MOB_EFFECTS.register(
@@ -32,9 +33,9 @@ public class ModEffects {
               new HeatStrokeEffect(MobEffectCategory.HARMFUL, 0xfa7223)
                   .addAttributeModifier(
                       Attributes.ATTACK_DAMAGE,
-                      "7107DE5E-7CE8-4030-940E-514C1F160889",
+                      ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, "effect.heat_stroke"),
                       -0.15F,
-                      AttributeModifier.Operation.MULTIPLY_TOTAL));
+                      AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
   public static void register(IEventBus bus) {
     MOB_EFFECTS.register(bus);

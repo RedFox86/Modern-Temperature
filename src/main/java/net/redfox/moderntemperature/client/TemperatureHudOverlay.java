@@ -2,9 +2,9 @@ package net.redfox.moderntemperature.client;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.redfox.moderntemperature.ModernTemperature;
 import net.redfox.moderntemperature.config.ModernTemperatureClientConfigs;
 
@@ -70,50 +70,18 @@ public class TemperatureHudOverlay {
     }
   }
 
-  public static final IGuiOverlay TEMPERATURE_GAUGE =
-      ((gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-        if (!gaugeEnabled) return;
+  public static final LayeredDraw.Layer TEMPERATURE_GAUGE = ((pGuiGraphics, pDeltaTracker) -> {
 
-        final int OVERLAY_WIDTH = (int) (1920.0f / 120.0f);
-        final int OVERLAY_HEIGHT = (int) (1080.0f / 67.5f);
+  });
 
-        int OVERLAY_X = (screenWidth / 2) - (OVERLAY_WIDTH / 2);
-        int OVERLAY_Y = screenHeight - 54;
-
-        if (ClientTemperatureData.getPlayerTemperature() >= 80
-            || ClientTemperatureData.getPlayerTemperature() <= -80) {
-          switch ((int) (Math.random() * 4) + 1) {
-            case 1:
-              OVERLAY_X++;
-            case 2:
-              OVERLAY_X--;
-            case 3:
-              OVERLAY_Y++;
-            case 4:
-              OVERLAY_Y--;
-          }
-        }
-
-        guiGraphics.blit(
-            getTemperatureImage(),
-            OVERLAY_X,
-            OVERLAY_Y,
-            0,
-            0,
-            OVERLAY_WIDTH,
-            OVERLAY_HEIGHT,
-            OVERLAY_WIDTH,
-            OVERLAY_HEIGHT);
-      });
-
-  public static final IGuiOverlay TEMPERATURE_READING =
-      ((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+  public static final LayeredDraw.Layer TEMPERATURE_READING =
+      ((pGuiGraphics, pDeltaTracker) -> {
         if (!gaugeEnabled) return;
 
         int OVERLAY_X = 2;
         int OVERLAY_Y = 2;
 
-        poseStack.drawString(
+        pGuiGraphics.drawString(
             Minecraft.getInstance().font,
             Component.literal("Temp: " + ClientTemperatureData.getPlayerTemperature()),
             OVERLAY_X,

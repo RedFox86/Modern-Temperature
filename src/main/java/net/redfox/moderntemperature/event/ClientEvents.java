@@ -1,8 +1,10 @@
 package net.redfox.moderntemperature.event;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.client.event.AddGuiOverlayLayersEvent;
+import net.minecraftforge.client.gui.overlay.ForgeLayeredDraw;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.redfox.moderntemperature.ModernTemperature;
@@ -15,15 +17,14 @@ public class ClientEvents {
       bus = Mod.EventBusSubscriber.Bus.MOD)
   public static class ClientModBusEvents {
     @SubscribeEvent
-    public static void onRegisterGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-      event.registerAbove(
-          VanillaGuiOverlay.DEBUG_TEXT.id(),
-          "temperature_gauge",
-          TemperatureHudOverlay.TEMPERATURE_GAUGE);
-      event.registerAbove(
-          VanillaGuiOverlay.DEBUG_TEXT.id(),
-          "temperature_reading",
-          TemperatureHudOverlay.TEMPERATURE_READING);
+    public static void onRegisterGuiOverlaysEvent(AddGuiOverlayLayersEvent event) {
+      ForgeLayeredDraw draw = event.getLayeredDraw();
+      draw.addAbove(ForgeLayeredDraw.DEBUG_OVERLAY,
+          ResourceLocation.fromNamespaceAndPath(ModernTemperature.MOD_ID, "temperature_gauge"),
+          ((pGuiGraphics, pDeltaTracker) -> {
+            
+          })
+          );
     }
   }
 }
