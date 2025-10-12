@@ -28,14 +28,11 @@ public class ModEvents {
   public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
     if (event.phase == TickEvent.Phase.END) {
       if (event.getServer().getTickCount() % 20 == 0) {
-        System.out.println(1);
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
-          System.out.println(2);
           player
               .getCapability(PlayerTemperatureProvider.PLAYER_TEMPERATURE)
               .ifPresent(
                   playerTemperature -> {
-                    System.out.println(3);
                     float approachingTemperature =
                         PlayerTemperature.calculateTemperatureGoal(player);
                     float temp = playerTemperature.getTemperature();
@@ -59,7 +56,6 @@ public class ModEvents {
                               true));
                     }
                     playerTemperature.approachTemperature(approachingTemperature);
-                    System.out.println(4);
                     ModPackets.sendToClient(
                         new TemperatureDataSyncS2CPacket(playerTemperature.getTemperature()),
                         player);

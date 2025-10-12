@@ -25,7 +25,6 @@ public class TemperatureDataSyncS2CPacket {
     context.enqueueWork(
         () -> {
           ClientTemperatureData.set(temperature);
-          System.out.println(5);
         });
     return true;
   }
